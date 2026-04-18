@@ -1,8 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
 
 const app = express();
+
+const razorpay = new Razorpay({
+  key_id: "rzp_test_SewgNRCgXLmPEW",
+  key_secret: "UR2RALYjJrpmSxpjlk0Zxikj"
+});
 
 app.use(cors());
 app.use(express.json());
@@ -135,11 +142,12 @@ app.post("/book", (req, res) => {
             VALUES (?, ?, 'PAID')
           `;
   
-          db.query(paymentSql, [bookingResult.insertId, finalPrice]);
-  
+db.query(paymentSql, [bookingResult.insertId, finalPrice]);
+   
           res.json({
             message: "Booking successful ✅",
-            price: finalPrice
+            price: finalPrice,
+            booking_id: bookingResult.insertId
           });
         });
       });
@@ -354,5 +362,48 @@ app.post("/book", (req, res) => {
     db.query(sql, [turf_id], (err, result) => {
       if (err) return res.status(500).send(err);
       res.send("Turf deleted ✅");
+    });
+  });
+
+  // Razorpay Payment
+  app.post("/create-payment-order", async (req, res) => {
+    const { amount, bookingId } = req.body;
+    try {
+      const order = await razorpay.orders.create({
+        amount: Math.round(amount * 100),
+        currency: "INR",
+        receipt: String(bookingId || "BOX-" + Date.now()),
+        notes: { bookingId: String(bookingId) }
+      });
+      console.log("Razorpay order created:", order.id);
+      res.json(order);
+    } catch (err) {
+      console.error("Razorpay error:", err);
+      res.status(500).json({ error: err.message, details: err });
+    }
+  });
+
+  app.post("/verify-payment", (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const secret = razorpay.key_secret;
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature = crypto
+      .createHmac("sha256", secret)
+      .update(body)
+      .digest("hex");
+    
+    if (expectedSignature === razorpay_signature) {
+      res.json({ status: "success" });
+    } else {
+      res.status(400).json({ status: "failed" });
+    }
+  });
+
+  app.post("/payment/success", (req, res) => {
+    const { booking_id, payment_id, amount } = req.body;
+    const sql = "UPDATE PAYMENT SET payment_status = 'PAID' WHERE payment_id = ?";
+    db.query(sql, [payment_id], (err, result) => {
+      if (err) return res.status(500).send(err);
+      res.send("Payment successful ✅");
     });
   });
