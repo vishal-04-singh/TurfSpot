@@ -11,8 +11,35 @@ app.get("/", (req, res) => {
   res.send("Turf Management Backend Running 🚀");
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(5001, () => {
+  console.log("Server running on port 5001");
+});
+
+app.post("/test-user", (req, res) => {
+  const sql = "INSERT INTO USERS (name, email, phone, password) VALUES (?, ?, ?, ?)";
+  db.query(sql, ["Test User", "test@example.com", "1234567890", "password123"], (err, result) => {
+    if (err) return res.status(500).send(err);
+    res.send("Test user created");
+  });
+});
+
+app.post("/create-test-users", (req, res) => {
+  const users = [
+    ["John Doe", "john@example.com", "9876543210", "john123"],
+    ["Jane Smith", "jane@example.com", "9876543211", "jane123"],
+    ["Admin User", "admin@turf.com", "9876543212", "admin123"]
+  ];
+  
+  const sql = "INSERT INTO USERS (name, email, phone, password) VALUES (?, ?, ?, ?)";
+  
+  users.forEach(user => {
+    db.query(sql, user, (err, result) => {});
+  });
+  
+  db.query("SELECT user_id, name, email, role FROM USERS", (err, result) => {
+    if (err) return res.status(500).send(err);
+    res.json(result);
+  });
 });
 
 app.get("/turfs", (req, res) => {
@@ -25,11 +52,11 @@ app.get("/turfs", (req, res) => {
   });
 });
 app.post("/register", (req, res) => {
-    const { name, email, phone, password } = req.body;
+    const { name, email, phone, password, role } = req.body;
   
-    const sql = "INSERT INTO USERS (name, email, phone, password) VALUES (?, ?, ?, ?)";
+    const sql = "INSERT INTO USERS (name, email, phone, password, role) VALUES (?, ?, ?, ?, ?)";
   
-    db.query(sql, [name, email, phone, password], (err, result) => {
+    db.query(sql, [name, email, phone, password, role || "CUSTOMER"], (err, result) => {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -229,7 +256,7 @@ app.post("/book", (req, res) => {
     const user_id = req.params.user_id;
   
     const sql = `
-      SELECT B.booking_id, T.name AS turf_name, B.booking_datetime, 
+      SELECT B.booking_id, B.turf_id, T.name AS turf_name, B.booking_datetime, 
              B.start_time, B.end_time, B.status
       FROM BOOKING B
       JOIN TURF T ON B.turf_id = T.turf_id
@@ -292,5 +319,40 @@ app.post("/book", (req, res) => {
     db.query(sql, [name, location, type, price], (err) => {
       if (err) return res.status(500).send(err);
       res.send("Turf added ✅");
+    });
+  });
+
+  app.get("/admin/users", (req, res) => {
+    const sql = "SELECT user_id, name, email, phone, role FROM USERS";
+    db.query(sql, (err, result) => {
+      if (err) return res.status(500).send(err);
+      res.json(result);
+    });
+  });
+
+  app.get("/admin/turfs", (req, res) => {
+    const sql = "SELECT * FROM TURF";
+    db.query(sql, (err, result) => {
+      if (err) return res.status(500).send(err);
+      res.json(result);
+    });
+  });
+
+  app.put("/admin/booking/:id/status", (req, res) => {
+    const { status } = req.body;
+    const booking_id = req.params.id;
+    const sql = "UPDATE BOOKING SET status = ? WHERE booking_id = ?";
+    db.query(sql, [status, booking_id], (err, result) => {
+      if (err) return res.status(500).send(err);
+      res.send("Status updated ✅");
+    });
+  });
+
+  app.delete("/admin/turf/:id", (req, res) => {
+    const turf_id = req.params.id;
+    const sql = "DELETE FROM TURF WHERE turf_id = ?";
+    db.query(sql, [turf_id], (err, result) => {
+      if (err) return res.status(500).send(err);
+      res.send("Turf deleted ✅");
     });
   });
