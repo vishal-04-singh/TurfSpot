@@ -1,0 +1,109 @@
+.bookings-page {
+  padding: 48px 24px;
+  min-height: calc(100vh - 73px);
+  background: var(--bg-primary);
+  transition: background 0.3s ease;
+}
+
+.bookings-page .page-header {
+  margin-bottom: 48px;
+}
+
+.bookings-page .page-header .section-label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.booking-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-header h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-booked {
+  background: var(--forest-green);
+  color: #ffffff;
+}
+
+.status-completed {
+  background: var(--border-light);
+  color: var(--text-primary);
+}
+
+.status-cancelled {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.booking-details {
+  display: flex;
+  gap: 24px;
+}
+
+.booking-details p {
+  display: flex;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.booking-card .btn {
+  align-self: flex-start;
+}
+
+.review-section {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.3s ease;
+}
+
+.review-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.review-inputs input {
+  max-width: 300px;
+}
+
+.review-inputs .btn {
+  align-self: flex-start;
+  max-width: 200px;
+}

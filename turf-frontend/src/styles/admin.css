@@ -1,0 +1,195 @@
+.admin-page {
+  padding: 48px 24px;
+  min-height: calc(100vh - 73px);
+  background: var(--bg-primary);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.admin-page .page-header {
+  margin-bottom: 48px;
+}
+
+.admin-page .page-header .section-label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.admin-page .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.stat-card .stat-number {
+  display: block;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--neon-volt);
+  margin-bottom: 8px;
+}
+
+.stat-card .caption {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--text-secondary);
+}
+
+.chart-card {
+  margin-bottom: 32px;
+  max-width: 800px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.chart-card h3 {
+  margin-bottom: 24px;
+}
+
+.admin-page .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 1200px;
+}
+
+.admin-page .card h3 {
+  margin-bottom: 24px;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.tab-btn:hover {
+  border-color: var(--neon-volt);
+  color: var(--neon-volt);
+}
+
+.tab-btn.active {
+  background: var(--neon-volt);
+  color: #ffffff;
+  border-color: var(--neon-volt);
+}
+
+[data-theme="light"] .tab-btn.active {
+  color: #ffffff;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table th {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--text-secondary);
+}
+
+.admin-table td {
+  color: var(--text-primary);
+}
+
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.role-admin {
+  background: var(--neon-volt);
+  color: #ffffff;
+}
+
+.role-customer {
+  background: var(--border-light);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .role-admin {
+  color: #ffffff;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.action-btn.success {
+  background: var(--forest-green);
+  color: #ffffff;
+}
+
+.action-btn.danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  .admin-page .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-page .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

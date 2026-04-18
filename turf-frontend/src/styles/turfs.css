@@ -1,0 +1,121 @@
+.turfs-page {
+  padding: 48px 24px;
+  min-height: calc(100vh - 73px);
+  background: var(--bg-primary);
+  transition: background 0.3s ease;
+}
+
+.page-header {
+  margin-bottom: 48px;
+}
+
+.page-header .section-label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.page-header .feature-heading {
+  margin-bottom: 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px;
+}
+
+.turfs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.turf-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.turf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.turf-header h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.turf-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--neon-volt);
+}
+
+.turf-price .caption {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.turf-location {
+  color: var(--text-secondary);
+}
+
+.turf-reviews {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  transition: border-color 0.3s ease;
+}
+
+.turf-reviews .section-label {
+  margin-bottom: 12px;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.review-rating {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neon-volt);
+}
+
+.review-comment {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.review-author {
+  font-size: 12px;
+}
+
+.turf-card .btn {
+  margin-top: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .turfs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .turfs-grid {
+    grid-template-columns: 1fr;
+  }
+}
