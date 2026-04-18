@@ -37,15 +37,14 @@ npm install
 
 2. **Configure database:**
 - Create MySQL database `turf_management`
-- Update `turf-backend/db.js` with your credentials:
-```javascript
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "your_password",
-  database: "turf_management"
-});
+- Create `turf-backend/.env` with your MySQL credentials:
+```bash
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=turf_management
 ```
+- If your local MySQL user is not `root`, update `DB_USER` accordingly.
 
 3. **Create tables:**
 ```sql
